@@ -134,9 +134,9 @@ const Content = styled.div`
   justify-content: center;
   height: calc(50vh + 165px);
 
-  @media (max-height: 570px) and (max-width: 700px) {
+  @media (max-width: 940px) {
     & {
-      height: 50vh;
+      height: 30vh;
     }
   }
 `;
@@ -204,6 +204,7 @@ const Details = styled.div`
   @media (max-width: 940px) {
     & {
       align-items: center;
+      align-self: end;
     }
   }
 
