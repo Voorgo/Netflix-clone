@@ -37,6 +37,7 @@ const MovieCard = ({ movie, backup }) => {
             movie?.backdrop_path || backup
           }`}
           alt={movie?.title}
+          loading="lazy"
         />
       </Link>
     </SliderWrapper>
