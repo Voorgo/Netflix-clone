@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { UserAuth } from "../context/AuthContext";
 
 const Signup = () => {
@@ -8,11 +8,12 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const checkBox = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signUp(email, password);
+      await signUp(email, password, checkBox);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -46,7 +47,7 @@ const Signup = () => {
           </form>
           <Help>
             <div>
-              <input type="checkbox" id="remember-me" />
+              <input type="checkbox" id="remember-me" ref={checkBox} />
               <label htmlFor="remember-me">Remember me</label>
             </div>
             <span>Need help?</span>

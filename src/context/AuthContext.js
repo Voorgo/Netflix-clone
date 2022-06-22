@@ -5,6 +5,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 const AuthContext = createContext();
@@ -12,15 +15,27 @@ const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState({});
 
-  function signUp(email, password) {
+  function signUp(email, password, input) {
+    setPersistence(
+      auth,
+      input.current.checked
+        ? browserLocalPersistence
+        : browserSessionPersistence
+    );
     createUserWithEmailAndPassword(auth, email, password);
     setDoc(doc(db, "users", email), {
       savedMovies: [],
     });
   }
 
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+  function login(email, password, input) {
+    setPersistence(
+      auth,
+      input.current.checked
+        ? browserLocalPersistence
+        : browserSessionPersistence
+    );
+    signInWithEmailAndPassword(auth, email, password);
   }
 
   function logOut() {
