@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 const NavBar = () => {
-  const { user, logOut } = UserAuth();
+  const { logOut } = UserAuth();
 
   const handleLogOut = async () => {
     try {
@@ -15,7 +15,7 @@ const NavBar = () => {
   return (
     <Nav>
       <LogoLink to="/">NETFLIX</LogoLink>
-      {user?.email ? (
+      {JSON.parse(localStorage.getItem("user")) ? (
         <NavButtons>
           <Link to="/" className="home-button">
             Home

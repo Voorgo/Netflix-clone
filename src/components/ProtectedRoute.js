@@ -6,7 +6,8 @@ const ProtectedRoute = ({ children }) => {
 
   if (!user) {
     return <Navigate to="/" />;
-  } else {
+  }
+  if (user?.email) {
     return children;
   }
 };
