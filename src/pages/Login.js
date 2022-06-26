@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { UserAuth } from "../context/AuthContext";
 
 const Login = () => {
-  const { login, user } = UserAuth();
+  const { login } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

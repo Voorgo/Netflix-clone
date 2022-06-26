@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { UserAuth } from "../context/AuthContext";
 
 const Signup = () => {
-  const { signUp, user } = UserAuth();
+  const { signUp } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();

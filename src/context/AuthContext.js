@@ -35,7 +35,7 @@ export function AuthContextProvider({ children }) {
         ? browserLocalPersistence
         : browserSessionPersistence
     );
-    signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
   function logOut() {
