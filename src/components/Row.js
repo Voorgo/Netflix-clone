@@ -79,6 +79,7 @@ const Container = styled.div`
 const MoviesContainer = styled.div`
   overflow-x: scroll;
   white-space: nowrap;
+  overflow-y: hidden;
   padding: 0 3rem;
   -ms-overflow-style: none;
   scrollbar-width: none;
