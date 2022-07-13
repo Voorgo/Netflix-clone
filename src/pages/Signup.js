@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import { UserAuth } from "../context/AuthContext";
 
@@ -7,14 +7,14 @@ const Signup = () => {
   const { signUp } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
   const checkBox = useRef(null);
 
   const handleSubmit = async (e) => {
+    setError("");
     e.preventDefault();
     try {
-      await signUp(email, password, checkBox);
-      navigate("/");
+      await signUp(email, password, checkBox, setError);
     } catch (error) {
       console.log(error);
     }
@@ -32,6 +32,7 @@ const Signup = () => {
       <FormContainer>
         <div className="signup-content">
           <h1>Sign Up</h1>
+          {error ? <p className="error-message">{error}</p> : null}
           <form onSubmit={handleSubmit}>
             <input
               type="email"
@@ -105,6 +106,14 @@ const FormContainer = styled.div`
     padding: 6rem;
     margin: 0 auto;
     border-radius: 5px;
+  }
+
+  .error-message {
+    font-size: 1.5rem;
+    padding: 1rem;
+    background: #fc0352;
+    color: white;
+    margin: 2rem 0;
   }
 
   h1 {

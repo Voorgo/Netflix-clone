@@ -10,19 +10,26 @@ import {
   browserLocalPersistence,
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+
 const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
 
-  function signUp(email, password, input) {
+  function signUp(email, password, input, setError) {
     setPersistence(
       auth,
       input.current.checked
         ? browserLocalPersistence
         : browserSessionPersistence
     );
-    createUserWithEmailAndPassword(auth, email, password);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => navigate("/"))
+      .catch((error) => {
+        setError(error.message);
+      });
     setDoc(doc(db, "users", email), {
       savedMovies: [],
     });
