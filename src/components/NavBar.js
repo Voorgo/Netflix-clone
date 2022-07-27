@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const NavBar = () => {
   const { logOut } = UserAuth();
@@ -36,6 +38,13 @@ const NavBar = () => {
           <Link to="/signup">
             <SignUpButton>Sign Up</SignUpButton>
           </Link>
+          <Demo
+            onClick={() =>
+              signInWithEmailAndPassword(auth, "test@test.com", "123456")
+            }
+          >
+            Demo
+          </Demo>
         </NavButtons>
       )}
     </Nav>
@@ -92,6 +101,15 @@ const SignInButton = styled.button`
   border-radius: 0.3rem;
 `;
 const SignUpButton = styled(SignInButton)`
+  background: red;
+  border: none;
+
+  &:active {
+    background: #a11202;
+  }
+`;
+
+const Demo = styled(SignInButton)`
   background: red;
   border: none;
 
