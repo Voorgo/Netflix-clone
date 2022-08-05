@@ -49,6 +49,11 @@ const Movie = () => {
             </PosterCard>
             <Details>
               <h1>{movie?.title}</h1>
+              <div className="about">
+                <span>{movie?.release_date}</span> |{" "}
+                <span>{movie?.original_language}</span> |{" "}
+                <span>{movie?.runtime} mins</span>
+              </div>
               <Genres>
                 {movie?.genres?.map((genre, index) => (
                   <div key={index}>{genre.name}</div>
@@ -57,6 +62,19 @@ const Movie = () => {
               <Description>{movie?.overview}</Description>
             </Details>
           </Content>
+          <Casts>
+            <h3>Casts</h3>
+            <div className="actors">
+              {movie?.credits?.cast.slice(0, 5).map((cast) => (
+                <div>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${cast?.profile_path}`}
+                  />
+                  <p>{cast?.name}</p>
+                </div>
+              ))}
+            </div>
+          </Casts>
           <div className="trailer">
             Trailer
             <iframe
@@ -185,6 +203,10 @@ const Details = styled.div`
     font-size: 4.5rem;
   }
 
+  .about {
+    font-size: 1.3rem;
+  }
+
   @media (max-width: 1430px) {
     & {
       flex-basis: 60%;
@@ -264,6 +286,51 @@ const Error = styled.div`
 
   h2 {
     font-size: 4rem;
+  }
+`;
+const Casts = styled.div`
+  width: 70%;
+  heigth: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.8rem;
+
+  img {
+    width: 160px;
+  }
+
+  h3 {
+    text-align: center;
+    width: 100%;
+    font-size: 2.7rem;
+  }
+
+  .actors {
+    font-size: 1.5rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: 1000px) {
+    .actors {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    img {
+      width: 100%;
+    }
   }
 `;
 
