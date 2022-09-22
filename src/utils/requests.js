@@ -7,6 +7,9 @@ const requests = {
   requestDetails: function (id) {
     return `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=videos,credits`;
   },
+  requestKeyword: function (word) {
+    return `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&query=${word}&page=1`;
+  },
 };
 
 export default requests;

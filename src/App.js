@@ -7,6 +7,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import Account from "./pages/Account";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Movie from "./pages/Movie";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
