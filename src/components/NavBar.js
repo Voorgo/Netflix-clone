@@ -19,32 +19,46 @@ const NavBar = () => {
       <LogoLink to="/">NETFLIX</LogoLink>
       {JSON.parse(localStorage.getItem("user")) ? (
         <NavButtons>
-          <Link to="/" className="home-button">
-            Home
-          </Link>
-          <Link to="/account">
-            <SignInButton className="signIn">Account</SignInButton>
-          </Link>
-          <SignUpButton onClick={handleLogOut}>Logout</SignUpButton>
+          <div className="navigation">
+            <Link to="/" className="navigation-button">
+              Home
+            </Link>
+            <Link to="/search" className="navigation-button">
+              Search
+            </Link>
+          </div>
+          <div className="navigation">
+            <Link to="/account">
+              <SignInButton className="signIn">Account</SignInButton>
+            </Link>
+            <SignUpButton onClick={handleLogOut}>Logout</SignUpButton>
+          </div>
         </NavButtons>
       ) : (
         <NavButtons>
-          <Link to="/" className="home-button">
-            Home
-          </Link>
-          <Link to="/login">
-            <SignInButton className="signIn">Sign In</SignInButton>
-          </Link>
-          <Link to="/signup">
-            <SignUpButton>Sign Up</SignUpButton>
-          </Link>
-          <Demo
-            onClick={() =>
-              signInWithEmailAndPassword(auth, "test@test.com", "123456")
-            }
-          >
-            Demo
-          </Demo>
+          <div className="navigation">
+            <Link to="/" className="navigation-button">
+              Home
+            </Link>
+            <Link to="/search" className="navigation-button">
+              Search
+            </Link>
+          </div>
+          <div className="navigation">
+            <Link to="/login">
+              <SignInButton className="signIn">Sign In</SignInButton>
+            </Link>
+            <Link to="/signup">
+              <SignUpButton>Sign Up</SignUpButton>
+            </Link>
+            <Demo
+              onClick={() =>
+                signInWithEmailAndPassword(auth, "test@test.com", "123456")
+              }
+            >
+              Demo
+            </Demo>
+          </div>
         </NavButtons>
       )}
     </Nav>
@@ -61,7 +75,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   z-index: 1000;
 
-  @media (max-width: 550px) {
+  @media (max-width: 620px) {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
@@ -83,11 +97,21 @@ const NavButtons = styled.div`
     align-self: center;
   }
 
-  .home-button {
+  .navigation-button {
     text-decoration: none;
     color: white;
     font-size: 2rem;
     font-weight: bold;
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+  }
+
+  @media (max-width: 550px) {
+    flex-direction: column;
   }
 `;
 const SignInButton = styled.button`

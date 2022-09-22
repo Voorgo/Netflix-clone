@@ -65,10 +65,11 @@ const Movie = () => {
           <Casts>
             <h3>Casts</h3>
             <div className="actors">
-              {movie?.credits?.cast.slice(0, 5).map((cast) => (
-                <div>
+              {movie?.credits?.cast.slice(0, 5).map((cast, i) => (
+                <div key={i}>
                   <img
                     src={`https://image.tmdb.org/t/p/original/${cast?.profile_path}`}
+                    alt="actor"
                   />
                   <p>{cast?.name}</p>
                 </div>

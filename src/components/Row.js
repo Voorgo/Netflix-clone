@@ -26,7 +26,7 @@ const Row = ({ title, fetchUrl, id }) => {
   useEffect(() => {
     fetchMovies();
     //eslint-disable-next-line
-  }, [fetchUrl]);
+  }, []);
 
   return (
     <Container>
