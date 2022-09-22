@@ -1,12 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import requests from "../utils/requests";
 import CategorySection from "./CategorySection";
+import ConfirmationAlert from "./ConfirmationAlert";
+import { db } from "../firebase";
+import { updateDoc, doc, arrayUnion } from "firebase/firestore";
+import { UserAuth } from "../context/AuthContext";
 
 const Main = () => {
-  const [movies, setMovies] = useState("");
-  const movie = movies[Math.floor(Math.random() * movies?.length)];
+  const [movies, setMovies] = useState([]);
+  const [confirmation, setConfirmation] = useState(false);
+  const { user } = UserAuth();
+  const userId = doc(db, "users", `${user?.email}`);
+  const movie = useMemo(
+    () => movies[Math.floor(Math.random() * movies?.length)],
+    [movies]
+  );
+
   const fetchMovie = async () => {
     try {
       const result = await fetch(requests.requestPopular);
@@ -14,6 +25,22 @@ const Main = () => {
       setMovies(data.results);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const saveMovie = async () => {
+    if (user?.email) {
+      await updateDoc(userId, {
+        savedMovies: arrayUnion({
+          id: movie.id,
+          title: movie.title,
+          img: movie.backdrop_path,
+        }),
+      });
+      setConfirmation(true);
+      setTimeout(() => setConfirmation(false), 1500);
+    } else {
+      alert("Please log in to save a movie");
     }
   };
 
@@ -28,28 +55,31 @@ const Main = () => {
     fetchMovie();
   }, []);
   return (
-    <MainContainer>
-      <BannerContainer>
-        <div className="layer"></div>
-        {movie ? (
-          <img
-            src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
-            alt="text"
-          />
-        ) : null}
+    <>
+      <MainContainer>
+        <BannerContainer>
+          <div className="layer"></div>
+          {movie ? (
+            <img
+              src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
+              alt="text"
+            />
+          ) : null}
 
-        <InfoContainer>
-          <h1>{movie?.title}</h1>
-          <ButtonContainer>
-            <Link to={`/movie/${movie?.id}`}>Play</Link>
-            <button>Watch Later</button>
-          </ButtonContainer>
-          <p>Released: {movie?.release_date}</p>
-          <p>{truncateString(movie?.overview)}</p>
-        </InfoContainer>
-      </BannerContainer>
-      <CategorySection />
-    </MainContainer>
+          <InfoContainer>
+            <h1>{movie?.title}</h1>
+            <ButtonContainer>
+              <Link to={`/movie/${movie?.id}`}>Play Trailer</Link>
+              <button onClick={saveMovie}>Watch Later</button>
+            </ButtonContainer>
+            <p>Released: {movie?.release_date}</p>
+            <p>{truncateString(movie?.overview)}</p>
+          </InfoContainer>
+        </BannerContainer>
+        <CategorySection />
+        {confirmation && <ConfirmationAlert />}
+      </MainContainer>
+    </>
   );
 };
 
